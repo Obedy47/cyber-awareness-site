@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cyber Assistant Chatbot</title>
+  <style>
+    /* Import Share Tech Mono font */
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #121212;
+      margin: 0;
+      padding: 0;
+    }
+
+    #chatbot-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 350px;
+      max-height: 80vh;
+      background-color: #1e1e1e;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0, 255, 150, 0.3);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      font-family: 'Share Tech Mono', monospace;
+    }
+
+    #chat-header {
+      background-color: #00c67a;
+      padding: 10px 15px;
+      color: #fff;
+      font-weight: bold;
+      font-size: 1.1rem;
+      font-family: 'Share Tech Mono', monospace;
+    }
+
+    #chat-window {
+      flex: 1;
+      padding: 10px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      background-color: #1e1e1e;
+      font-family: 'Share Tech Mono', monospace;
+      color: #ccc;
+      font-size: 0.95rem;
+    }
+
+    .message {
+      max-width: 80%;
+      padding: 10px;
+      border-radius: 10px;
+      line-height: 1.4;
+      position: relative;
+      word-wrap: break-word;
+    }
+
+    .user {
+      align-self: flex-end;
+      background-color: #00c67a;
+      color: white;
+    }
+
+    .bot {
+      align-self: flex-start;
+      background-color: #333;
+      color: white;
+    }
+
+    /* Timestamp style */
+    .timestamp {
+      font-size: 0.7rem;
+      color: #66ffb3;
+      position: absolute;
+      bottom: 5px;
+      right: 10px;
+      font-family: 'Share Tech Mono', monospace;
+      opacity: 0.7;
+    }
+
+    #chat-input {
+      display: flex;
+      padding: 10px;
+      background-color: #1a1a1a;
+      font-family: 'Share Tech Mono', monospace;
+    }
+
+    #user-input {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 10px;
+      outline: none;
+      font-size: 1rem;
+      background-color: #2c2c2c;
+      color: white;
+      font-family: 'Share Tech Mono', monospace;
+    }
+
+    #send-btn {
+      margin-left: 10px;
+      background-color: #00c67a;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      font-family: 'Share Tech Mono', monospace;
+      transition: background-color 0.3s ease;
+    }
+
+    #send-btn:hover {
+      background-color: #00a86b;
+    }
+  </style>
+</head>
+<body>
+
+<div id="chatbot-container">
+  <div id="chat-header">Cyber Assistant 🤖</div>
+  <div id="chat-window"></div>
+  <div id="chat-input">
+    <input type="text" id="user-input" placeholder="Ask something..." autocomplete="off" />
+    <button id="send-btn" onclick="sendMessage()">Send</button>
+  </div>
+</div>
+
+<script>
+  const chatWindow = document.getElementById("chat-window");
+  const inputField = document.getElementById("user-input");
+
+  function appendMessage(sender, text) {
+    const msg = document.createElement("div");
+    msg.classList.add("message");
+    msg.classList.add(sender === "user" ? "user" : "bot");
+
+    // Create text node
+    const messageText = document.createTextNode(text);
+    msg.appendChild(messageText);
+
+    // Create timestamp
+    const timestamp = document.createElement("span");
+    timestamp.classList.add("timestamp");
+    const now = new Date();
+    timestamp.textContent = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+    msg.appendChild(timestamp);
+
+    chatWindow.appendChild(msg);
+    chatWindow.scrollTop = chatWindow.scrollHeight;
+  }
+
+  async function sendMessage() {
+    const userText = inputField.value.trim();
+    if (!userText) return;
+
+    appendMessage("user", userText);
+    inputField.value = "";
+
+    try {
+      const response = await fetch("http://127.0.0.1:5000/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ message: userText })
+      });
+
+      const data = await response.json();
+      if (data.response) {
+        appendMessage("bot", data.response);
+      } else {
+        appendMessage("bot", "❌ Error: Could not get a response.");
+      }
+    } catch (error) {
+      appendMessage("bot", "⚠ Failed to connect to server.");
+    }
+  }
+
+  // Allow Enter key to send message
+  inputField.addEventListener("keypress", function (e) {
+    if (e.key === "Enter") sendMessage();
+  });
+</script>
+
+</body>
+</html>

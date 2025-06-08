@@ -1,0 +1,338 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Enhanced Security Tools - Cyber Awareness</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f2f6fc;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    header {
+      background: #003366;
+      color: #fff;
+      padding: 20px 0;
+      text-align: center;
+    }
+    header nav a {
+      color: #fff;
+      margin: 0 12px;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    header nav a:hover {
+      text-decoration: underline;
+    }
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      background: #fff;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    h2, h3 {
+      text-align: center;
+      color: #003366;
+    }
+    .tool-section {
+      margin-top: 50px;
+    }
+    .tool-section p {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+    .toggle-btn {
+      background-color: #003366;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-bottom: 15px;
+    }
+    .toggle-btn:hover {
+      background-color: #00509e;
+    }
+    .tool-content {
+      display: none;
+      margin-top: 20px;
+    }
+    input[type="password"],
+    input[type="email"],
+    input[type="text"],
+    input[type="number"] {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      margin-bottom: 10px;
+    }
+    .strength {
+      font-weight: bold;
+      padding: 12px;
+      border-radius: 6px;
+      color: white;
+      font-size: 18px;
+    }
+    .weak { background-color: red; }
+    .medium { background-color: orange; }
+    .strong { background-color: green; }
+    .result-box {
+      margin-top: 10px;
+      font-weight: bold;
+      font-size: 18px;
+    }
+    .safe { color: green; }
+    .breached { color: red; }
+    .copy-btn {
+      background-color: #0066cc;
+      color: white;
+      margin-top: 10px;
+      font-size: 16px;
+    }
+    .copy-btn:hover {
+      background-color: #004999;
+    }
+    .description {
+      font-style: italic;
+      color: #666;
+      font-size: 15px;
+      margin-bottom: 15px;
+    }
+    .crack-label {
+      font-weight: bold;
+      font-size: 18px;
+      color: #003366;
+    }
+    footer {
+      background: #003366;
+      color: #fff;
+      padding: 20px 0;
+      text-align: center;
+      margin-top: 60px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Cyber Awareness</h1>
+    <p>IAA Training</p>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="courses.html">Courses</a>
+      <a href="security-tools.html">Security Tools</a>
+      <a href="phishing-simulation.html">Phishing Simulation</a>
+    </nav>
+  </header>  <div class="container">
+    <h2>Security Enhancement Tools</h2>
+    <p style="text-align:center;">Use these tools to assess and improve your cybersecurity hygiene.</p>
+    <hr><!-- Advanced Password Analyzer -->
+<div class="tool-section">
+  <h3>Advanced Password Security Analyzer</h3>
+  <p class="description">This tool checks how strong your password is and how long it would take to crack using various attack types. AI recommendations included.</p>
+  <button class="toggle-btn" onclick="toggleTool('advancedTool')">Analyze Password</button>
+  <div id="advancedTool" class="tool-content">
+    <input type="password" id="advPassword" placeholder="Enter your password..." oninput="analyzeAdvancedPassword()">
+    <div id="advStrengthText" class="strength">Start typing to analyze...</div>
+    <div id="crackTimes">
+      <p class="crack-label">Brute Force: <span id="bruteForceTime">-</span></p>
+      <p class="crack-label">Dictionary Attack: <span id="dictionaryTime">-</span></p>
+      <p class="crack-label">Hybrid Attack: <span id="hybridTime">-</span></p>
+    </div>
+    <p id="passwordFeedback" class="description"></p>
+  </div>
+</div>
+
+<!-- Password Generator -->
+<div class="tool-section">
+  <h3>Secure Password Generator</h3>
+  <p class="description">Customize and generate a strong password with the character types you prefer.</p>
+  <button class="toggle-btn" onclick="toggleTool('generatorTool')">Generate Password</button>
+  <div id="generatorTool" class="tool-content">
+    <label for="length">Length:</label>
+    <input type="number" id="length" value="12" min="6" max="32">
+    <label><input type="checkbox" id="includeUpper" checked> Include Uppercase</label>
+    <label><input type="checkbox" id="includeLower" checked> Include Lowercase</label>
+    <label><input type="checkbox" id="includeNumbers" checked> Include Numbers</label>
+    <label><input type="checkbox" id="includeSpecial" checked> Include Special Characters</label>
+    <button class="toggle-btn" onclick="generatePassword()">Generate</button>
+    <input type="text" id="generatedPassword" readonly>
+    <button class="toggle-btn copy-btn" onclick="copyPassword()">Copy</button>
+    <div id="passwordStrengthMeter" class="strength">Password Strength: Weak</div>
+  </div>
+</div>
+
+<!-- Email Breach Checker -->
+<div class="tool-section">
+  <h3>Email Breach Checker</h3>
+  <p class="description">Check if your email has been exposed in recent data breaches (simulated).</p>
+  <button class="toggle-btn" onclick="toggleTool('emailTool')">Check Email</button>
+  <div id="emailTool" class="tool-content">
+    <input type="email" id="emailInput" placeholder="Enter your email">
+    <button class="toggle-btn" onclick="checkEmail()">Check</button>
+    <div id="emailResult" class="result-box"></div>
+  </div>
+</div>
+
+  </div>  <footer>
+    <p>&copy; Cyber Awareness at IAA | Developed by OBEDY-47</p>
+  </footer>  <script>
+    function toggleTool(id) {
+      const tool = document.getElementById(id);
+      tool.style.display = tool.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function analyzeAdvancedPassword() {
+      const password = document.getElementById("advPassword").value;
+      const strengthText = document.getElementById("advStrengthText");
+      const bruteTime = document.getElementById("bruteForceTime");
+      const dictTime = document.getElementById("dictionaryTime");
+      const hybridTime = document.getElementById("hybridTime");
+      const passwordFeedback = document.getElementById("passwordFeedback");
+
+      let strength = 0;
+      let charsetSize = 0;
+
+      if (/[a-z]/.test(password)) { strength++; charsetSize += 26; }
+      if (/[A-Z]/.test(password)) { strength++; charsetSize += 26; }
+      if (/[0-9]/.test(password)) { strength++; charsetSize += 10; }
+      if (/[^a-zA-Z0-9]/.test(password)) { strength++; charsetSize += 32; }
+
+      const length = password.length;
+      const combinations = Math.pow(charsetSize, length);
+      const guessesPerSecond = 1e9;
+      const secondsToCrack = combinations / guessesPerSecond;
+      const dictionarySeconds = secondsToCrack / 1000;
+      const hybridSeconds = secondsToCrack / 10;
+
+      function formatTime(seconds) {
+        if (seconds < 1) return "less than a second";
+        const units = ["seconds", "minutes", "hours", "days", "years"];
+        const steps = [60, 60, 24, 365];
+        let i = 0;
+        while (i < steps.length && seconds >= steps[i]) {
+          seconds /= steps[i];
+          i++;
+        }
+        return seconds.toFixed(2) + " " + units[i];
+      }
+
+      if (length === 0) {
+        strengthText.textContent = "Start typing to analyze...";
+        strengthText.className = "strength";
+        bruteTime.textContent = dictTime.textContent = hybridTime.textContent = "-";
+        passwordFeedback.textContent = "";
+        return;
+      }
+
+      if (strength <= 1) {
+        strengthText.textContent = "Very Weak Password";
+        strengthText.className = "strength weak";
+        passwordFeedback.textContent = "AI Tip: Add more diverse character types and increase length.";
+      } else if (strength === 2) {
+        strengthText.textContent = "Weak Password";
+        strengthText.className = "strength weak";
+        passwordFeedback.textContent = "AI Tip: Include uppercase, numbers, and symbols.";
+      } else if (strength === 3) {
+        strengthText.textContent = "Moderate Password";
+        strengthText.className = "strength medium";
+        passwordFeedback.textContent = "AI Tip: Try making your password longer or more unique.";
+      } else {
+        strengthText.textContent = "Strong Password";
+        strengthText.className = "strength strong";
+        passwordFeedback.textContent = "AI Tip: Excellent! This is a very secure password.";
+      }
+
+      bruteTime.textContent = formatTime(secondsToCrack);
+      dictTime.textContent = formatTime(dictionarySeconds);
+      hybridTime.textContent = formatTime(hybridSeconds);
+    }
+
+    function generatePassword() {
+      const length = parseInt(document.getElementById("length").value);
+      const upper = document.getElementById("includeUpper").checked;
+      const lower = document.getElementById("includeLower").checked;
+      const numbers = document.getElementById("includeNumbers").checked;
+      const special = document.getElementById("includeSpecial").checked;
+
+      let charset = "";
+      if (lower) charset += "abcdefghijklmnopqrstuvwxyz";
+      if (upper) charset += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      if (numbers) charset += "0123456789";
+      if (special) charset += "!@#$%^&*()_+{}[]|:;<>,.?/~";
+
+      if (charset.length === 0) {
+        alert("Please select at least one character type.");
+        return;
+      }
+
+      let password = "";
+      for (let i = 0; i < length; i++) {
+        password += charset.charAt(Math.floor(Math.random() * charset.length));
+      }
+
+      document.getElementById("generatedPassword").value = password;
+      evaluatePasswordStrength(password);
+    }
+
+    function evaluatePasswordStrength(password) {
+      const strengthText = document.getElementById("passwordStrengthMeter");
+      let strength = 0;
+
+      if (/[a-z]/.test(password)) strength++;
+      if (/[A-Z]/.test(password)) strength++;
+      if (/[0-9]/.test(password)) strength++;
+      if (/[^a-zA-Z0-9]/.test(password)) strength++;
+
+      if (strength === 0) {
+        strengthText.textContent = "Password Strength: Very Weak";
+        strengthText.className = "strength weak";
+      } else if (strength === 1) {
+        strengthText.textContent = "Password Strength: Weak";
+        strengthText.className = "strength weak";
+      } else if (strength === 2) {
+        strengthText.textContent = "Password Strength: Medium";
+        strengthText.className = "strength medium";
+      } else {
+        strengthText.textContent = "Password Strength: Strong";
+        strengthText.className = "strength strong";
+      }
+    }
+
+    function copyPassword() {
+      const passField = document.getElementById("generatedPassword");
+      passField.select();
+      document.execCommand("copy");
+      alert("Password copied to clipboard!");
+    }
+
+    function checkEmail() {
+      const email = document.getElementById("emailInput").value;
+      const result = document.getElementById("emailResult");
+      const validFormat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if (!validFormat.test(email)) {
+        result.textContent = "Invalid email format.";
+        result.className = "result-box breached";
+        return;
+      }
+
+      const breached = Math.random() < 0.5;
+      if (breached) {
+        result.textContent = "Warning: This email may have been found in a data breach.";
+        result.className = "result-box breached";
+      } else {
+        result.textContent = "Good news! No recent breaches found for this email.";
+        result.className = "result-box safe";
+      }
+    }
+  </script></body>
+</html>

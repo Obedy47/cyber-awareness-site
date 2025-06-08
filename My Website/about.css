@@ -1,0 +1,38 @@
+/* About Us Section */
+.about-us {
+    text-align: center;
+    padding: 30px;
+    background-color: #f1f1f1;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+  
+  .about-us h2 {
+    font-size: 28px;
+    color: #002147;
+  }
+  
+  .about-us p {
+    font-size: 18px;
+    color: #555;
+  }
+  
+  /* Vision Section */
+  .our-vision {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    text-align: left;
+  }
+  
+  .our-vision h2 {
+    font-size: 26px;
+    color: #002147;
+  }
+  
+  .our-vision p {
+    font-size: 18px;
+    color: #555;
+  }

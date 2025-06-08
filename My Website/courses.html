@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Courses - Cyber Awareness at IAA</title>
+  <link rel="stylesheet" href="style.css" />
+  
+</head>
+<body>
+
+  <header>
+    <h1>Cyber Awareness</h1>
+    <p>IAA Institution</p>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="courses.html">Courses</a>
+      <a href="security-tools.html">Security Tools</a>
+      <a href="phishing-simulation.html">Phishing detection</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="courses-section">
+      <h2>Our Cybersecurity Courses</h2>
+      <p>Empower your digital future with our practical and engaging courses.</p>
+
+      <div class="course-card">
+        <h3>Introduction to Cybersecurity</h3>
+        <p>Learn the basics of cybersecurity, online safety, and common cyber threats.</p>
+        <p><strong>Level:</strong> Beginner | <strong>Duration:</strong> 4 Weeks</p>
+        <button onclick="showForm('Introduction to Cybersecurity')">Enroll Now</button>
+      </div>
+     
+
+      <div class="course-card">
+        <h3>Cyber Threat Detection & Prevention</h3>
+        <p>Detect and prevent malware, phishing, and social engineering attacks.</p>
+        <p><strong>Level:</strong> Intermediate | <strong>Duration:</strong> 6 Weeks</p>
+        <button onclick="showForm('Cyber Threat Detection & Prevention')">Enroll Now</button>
+      </div>
+
+      <div class="course-card">
+        <h3>Network & System Security</h3>
+        <p>Secure networks, firewalls, VPNs, and endpoint systems.</p>
+        <p><strong>Level:</strong> Advanced | <strong>Duration:</strong> 8 Weeks</p>
+        <button onclick="showForm('Network & System Security')">Enroll Now</button>
+      </div>
+
+      <div class="course-card">
+        <h3>Ethical Hacking & Pen Testing</h3>
+        <p>Explore ethical hacking and penetration testing tools.</p>
+        <p><strong>Level:</strong> Advanced | <strong>Duration:</strong> 10 Weeks</p>
+        <button onclick="showForm('Ethical Hacking & Pen Testing')">
+      </div>
+      <style>
+        #enrollForm {
+          display: none;
+          margin-top: 20px;
+          max-width: 500px;
+          padding: 20px;
+          background-color: #f4f4f4;
+          border-radius: 10px;
+        }
+      
+        button {
+          padding: 10px 20px;
+          background-color: #007bff;
+          color: white;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+        }
+      
+        button:hover {
+          background-color: #0056b3;
+        }
+      </style>
+      
+      <!-- Enroll Button -->
+      <button onclick="toggleForm()">Enroll</button>
+      
+      <!-- Hidden Form -->
+      <div id="enrollForm">
+        <h2>Contact Us</h2>
+        <form action="https://formspree.io/f/mgvapwle" method="POST">
+          <label for="email">Your email:</label><br>
+          <input type="email" name="email" id="email" required style="width: 100%; padding: 10px; margin-bottom: 10px;"><br>
+      
+          <label for="message">Your message:</label><br>
+          <textarea name="message" id="message" rows="5" required style="width: 100%; padding: 10px; margin-bottom: 10px;"></textarea><br>
+      
+          <button type="submit">Send</button>
+        </form>
+      </div>
+      
+      <script>
+        function toggleForm() {
+          const form = document.getElementById("enrollForm");
+          form.style.display = (form.style.display === "none" || form.style.display === "") ? "block" : "none";
+        }
+      </script>
+    </section>
+
+    <section class="enroll-section" id="enrollForm" style="display:none;">
+      <h2>Enroll in <span id="selectedCourse"></span></h2>
+      <form>
+        <label>Full Name:</label>
+        <input type="text" placeholder="Enter your name" required><br>
+        <label>Email Address:</label>
+        <input type="email" placeholder="Enter your email" required><br>
+        <label>Student ID:</label>
+        <input type="text" placeholder="Enter your ID" required><br>
+        <button type="submit">Submit Enrollment</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; Cyber Awareness at IAA Institution | Developed by OBEDY-47</p>
+  </footer>
+
+  <script>
+    function showForm(courseName) {
+      document.getElementById('enrollForm').style.display = 'block';
+      document.getElementById('selectedCourse').textContent = courseName;
+      window.scrollTo(0, document.body.scrollHeight);
+    }
+  </script>
+
+</body>
+</html>

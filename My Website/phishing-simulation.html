@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Phishing Link Detector | Cyber Awareness</title>
+  <style>
+    /* General Website Styles */
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f4f4f4;
+      color: #222;
+      font-size: 18px; /* Larger default font */
+      line-height: 1.7;
+    }
+
+    header {
+      background-color: #1a73e8;
+      color: white;
+      padding: 25px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 36px; /* Increased header font */
+    }
+
+    nav {
+      background-color: #1558b0;
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      padding: 15px;
+      font-size: 20px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #e0f2ff;
+    }
+
+    footer {
+      background-color: #1a73e8;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 60px;
+      font-size: 16px;
+    }
+
+    /* Detector Tool Styles */
+    .container {
+      max-width: 800px; /* Wider layout */
+      margin: 50px auto;
+      background: white;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    }
+
+    h2 {
+      text-align: center;
+      color: #1a73e8;
+      font-size: 32px;
+    }
+
+    .description {
+      background: linear-gradient(to right, #e0f2ff, #f0f9ff);
+      border-left: 8px solid #1a73e8;
+      padding: 20px 25px;
+      border-radius: 10px;
+      margin: 30px auto 40px;
+      font-size: 18px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 10px;
+      font-size: 20px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 16px;
+      font-size: 18px;
+      border: 1.5px solid #ccc;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    button {
+      background-color: #1a73e8;
+      color: white;
+      padding: 15px 25px;
+      border: none;
+      border-radius: 8px;
+      font-size: 20px;
+      cursor: pointer;
+      width: 100%;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background-color: #1558b0;
+    }
+
+    .result {
+      margin-top: 30px;
+      font-size: 20px;
+      line-height: 1.6;
+    }
+
+    .safe {
+      color: green;
+      font-weight: bold;
+    }
+
+    .suspicious {
+      color: orange;
+      font-weight: bold;
+    }
+
+    .danger {
+      color: red;
+      font-weight: bold;
+    }
+
+    .meter {
+      width: 100%;
+      height: 14px;
+      background: #ddd;
+      border-radius: 7px;
+      margin-top: 18px;
+      overflow: hidden;
+    }
+
+    .meter-fill {
+      height: 100%;
+      width: 0%;
+      transition: width 0.5s ease;
+    }
+
+    .ai-icon {
+      vertical-align: middle;
+      width: 30px;
+      height: 30px;
+      margin-right: 8px;
+    }
+
+    .recommendation {
+      margin-top: 20px;
+      font-size: 17px;
+      background: #eef6ff;
+      border-left: 5px solid #1a73e8;
+      padding: 14px 18px;
+      border-radius: 8px;
+      color: #1a73e8;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      max-width: 800px;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        font-size: 17px;
+      }
+
+      nav {
+        flex-wrap: wrap;
+        gap: 15px;
+        font-size: 18px;
+      }
+
+      .container {
+        padding: 25px;
+      }
+
+      header h1 {
+        font-size: 28px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Website Header -->
+  <header>
+    <h1>Cyber Awareness at IAA Institution</h1>
+  </header>
+
+  <!-- Website Navigation -->
+  <nav>
+    <a href="index.html">Home</a>
+     <a href="security-tools.html">Security Tools</a>
+    <a href="phishing-simulation.html">Phishing Simulation</a>
+    <a href="courses.html">courses</a>
+    <a href="about.html">About</a>
+  </nav>
+
+  <!-- Tool Section -->
+  <div class="container">
+    <h2>🔎 Phishing Link Detector</h2>
+
+    <div class="description">
+      This smart tool helps you evaluate the safety of a URL by scanning for suspicious patterns, keywords, and domains commonly used in phishing attacks. Stay alert and protect yourself from malicious links! 🛡
+    </div>
+
+    <label for="urlInput">Enter URL:</label>
+    <input type="text" id="urlInput" placeholder="https://example.com" />
+
+    <button id="analyzeBtn">Analyze Link</button>
+
+    <div class="meter">
+      <div id="meterFill" class="meter-fill"></div>
+    </div>
+
+    <div id="urlResult" class="result"></div>
+    <div id="aiRecommendation" class="recommendation" style="display:none;">
+      <img src="https://cdn-icons-png.flaticon.com/512/1055/1055672.png" alt="AI Icon" class="ai-icon" />
+      <span id="recommendationText"></span>
+    </div>
+  </div>
+
+  <!-- Website Footer -->
+  <footer>
+    &copy; 2025 Cyber Awareness at IAA Institution. All rights reserved.
+  </footer>
+
+  <!-- JS Script (unchanged) -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('analyzeBtn').addEventListener('click', analyzeURL);
+
+      function analyzeURL() {
+        const url = document.getElementById("urlInput").value.trim();
+        const result = document.getElementById("urlResult");
+        const meter = document.getElementById("meterFill");
+        const recommendationBox = document.getElementById("aiRecommendation");
+        const recommendationText = document.getElementById("recommendationText");
+
+        recommendationBox.style.display = 'none';
+        recommendationText.textContent = '';
+
+        if (!url) {
+          result.innerHTML = '<span class="danger">⚠ Please enter a URL.</span>';
+          meter.style.width = "0%";
+          meter.style.background = "#ddd";
+          return;
+        }
+
+        if (!/^https?:\/\/.+\..+/.test(url)) {
+          result.innerHTML = '<span class="danger">⚠ Invalid URL format.</span>';
+          meter.style.width = "0%";
+          meter.style.background = "#ddd";
+          return;
+        }
+
+        const lowerUrl = url.toLowerCase();
+        let level = "safe";
+        let score = 0;
+
+        const redFlags = ["free", "login", "verify", "update", "account", "gift", "win", "bank", "password", "confirm", "secure", "support"];
+        const highRiskWords = ["confirm", "secure", "bank", "password", "support", "account"];
+        const suspiciousTLDs = [".click", ".top", ".xyz", ".gq", ".tk", ".ml", ".cf", ".ga", ".life"];
+
+        let hostname;
+        try {
+          const urlObj = new URL(url);
+          hostname = urlObj.hostname;
+        } catch(e) {
+          result.innerHTML = '<span class="danger">⚠ Invalid URL.</span>';
+          meter.style.width = "0%";
+          meter.style.background = "#ddd";
+          return;
+        }
+
+        redFlags.forEach(word => {
+          if (lowerUrl.includes(word)) {
+            score += highRiskWords.includes(word) ? 2 : 1;
+          }
+        });
+
+        if (url.includes("@")) {
+          score += 3;
+        }
+
+        const subdomainPattern = /([a-f0-9]{10,})/;
+        if (subdomainPattern.test(hostname)) {
+          score += 2;
+        }
+
+        suspiciousTLDs.forEach(tld => {
+          if (hostname.endsWith(tld)) {
+            score += 2;
+          }
+        });
+
+        if (score >= 5) level = "danger";
+        else if (score >= 2) level = "suspicious";
+
+        const messages = {
+          safe: '<span class="safe">✅ This URL appears safe.</span>',
+          suspicious: '<span class="suspicious">⚠ This URL may be suspicious.</span>',
+          danger: '<span class="danger">🚨 This URL is highly suspicious and may be dangerous!</span>'
+        };
+
+        const tips = {
+          safe: "✅ No strong phishing markers detected. Still, remain cautious.",
+          suspicious: "⚠ Contains suspicious keywords or domains. Be careful before clicking.",
+          danger: "🚨 Contains high-risk patterns (e.g., @ symbol, short TLDs, hex subdomains). Very likely phishing!"
+        };
+
+        let aiRec = "";
+        if (level === "danger") {
+          aiRec = "AI Suggestion: Avoid clicking this link. Verify the sender’s identity and use official websites for sensitive actions.";
+        } else if (level === "suspicious") {
+          aiRec = "AI Suggestion: Double-check the URL and avoid providing personal info unless certain about the site’s legitimacy.";
+        } else {
+          aiRec = "AI Suggestion: This link seems safe but always stay cautious and keep your security software updated.";
+        }
+
+        result.innerHTML = messages[level] + "<br><small>" + tips[level] + "</small>";
+        recommendationText.textContent = aiRec;
+        recommendationBox.style.display = "flex";
+
+        speak(tips[level]);
+
+        meter.style.width = level === "safe" ? "33%" : level === "suspicious" ? "66%" : "100%";
+        meter.style.background = level === "safe" ? "green" : level === "suspicious" ? "orange" : "red";
+      }
+
+      function speak(text) {
+        if ('speechSynthesis' in window) {
+          const msg = new SpeechSynthesisUtterance(text);
+          window.speechSynthesis.speak(msg);
+        }
+      }
+    });
+  </script>
+</body>
+</html>
