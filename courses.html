@@ -2,132 +2,349 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Courses - Cyber Awareness at IAA</title>
-  <link rel="stylesheet" href="style.css" />
-  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Email Breach Checker - Cyber Awareness</title>
+  <style>
+    /* General Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f7fb;
+      color: #2c3e50;
+      padding: 0;
+      margin: 0;
+    }
+
+    /* Header Styling */
+    header {
+      background-color: #1a73e8;
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    header h1 {
+      font-size: 2.2rem;
+      margin-bottom: 5px;
+    }
+
+    header p {
+      font-size: 1.1rem;
+      margin-bottom: 15px;
+      font-weight: 300;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 10px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 10px 14px;
+      border-radius: 6px;
+      transition: background-color 0.3s ease;
+    }
+
+    nav a:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Email Checker Styling */
+    #email-checker {
+      --main-color: #1a73e8;
+      --safe-bg: #e8f5e9;
+      --safe-text: #256029;
+      --breach-bg: #ffebee;
+      --breach-text: #b71c1c;
+      padding: 40px 20px;
+    }
+
+    #email-checker .email-container {
+      background-color: #ffffff;
+      max-width: 520px;
+      margin: 40px auto;
+      padding: 36px 38px;
+      border-radius: 14px;
+      box-shadow: 0 12px 50px rgba(0, 0, 0, 0.08);
+    }
+
+    #email-checker h2 {
+      font-size: 2rem;
+      margin-bottom: 12px;
+      color: var(--main-color);
+      text-align: center;
+    }
+
+    #email-checker .description {
+      font-size: 1.05rem;
+      margin-bottom: 25px;
+      color: #444;
+      text-align: center;
+    }
+
+    #email-checker label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    #email-checker input[type="email"] {
+      width: 100%;
+      padding: 14px 16px;
+      font-size: 1.05rem;
+      border-radius: 8px;
+      border: 2px solid #d0d7de;
+      transition: border 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    #email-checker input[type="email"]:focus {
+      border-color: var(--main-color);
+      box-shadow: 0 0 8px rgba(26, 115, 232, 0.3);
+      outline: none;
+    }
+
+    #email-checker .buttons {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    #email-checker button {
+      flex: 1;
+      padding: 14px 0;
+      font-size: 1.1rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    #email-checker #checkBtn {
+      background-color: var(--main-color);
+      color: #fff;
+    }
+
+    #email-checker #checkBtn:hover {
+      background-color: #155ab6;
+    }
+
+    #email-checker #clearBtn {
+      background-color: #e0e0e0;
+      color: #444;
+    }
+
+    #email-checker #clearBtn:hover {
+      background-color: #cfd8dc;
+    }
+
+    #email-checker .result-box {
+      margin-top: 30px;
+      padding: 18px 22px;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    #email-checker .result-box.safe {
+      background-color: var(--safe-bg);
+      color: var(--safe-text);
+      border-left: 5px solid #43a047;
+    }
+
+    #email-checker .result-box.breached {
+      background-color: var(--breach-bg);
+      color: var(--breach-text);
+      border-left: 5px solid #e53935;
+    }
+
+    #email-checker .result-main {
+      font-weight: bold;
+      font-size: 1.15rem;
+    }
+
+    #email-checker .ai-tip {
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    @media (max-width: 600px) {
+      nav {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      #email-checker .email-container {
+        padding: 28px 20px;
+      }
+
+      header h1 {
+        font-size: 1.8rem;
+      }
+
+      header p {
+        font-size: 1rem;
+      }
+    }
+  </style>
 </head>
 <body>
 
+  <!-- 🔐 HEADER SECTION -->
   <header>
     <h1>Cyber Awareness</h1>
-    <p>IAA Institution</p>
+    <p>Institute of Accountancy Arusha (IAA)</p>
     <nav>
       <a href="index.html">Home</a>
       <a href="about.html">About</a>
-      <a href="courses.html">Courses</a>
-      <a href="security-tools.html">Security Tools</a>
-      <a href="phishing-simulation.html">Phishing detection</a>
+      <a href="courses.html">Email Checker</a>
+      <a href="security-tools.html">Password Tools</a>
+      <a href="phishing-simulation.html">Phishing Detection</a>
     </nav>
   </header>
 
-  <main>
-    <section class="courses-section">
-      <h2>Our Cybersecurity Courses</h2>
-      <p>Empower your digital future with our practical and engaging courses.</p>
+  <!-- 📧 EMAIL CHECKER TOOL -->
+  <div id="email-checker">
+    <div class="email-container">
+      <h2>Email Breach Checker</h2>
+      <p class="description">Check if your email has appeared in known data breaches. Stay alert and protect your identity.</p>
 
-      <div class="course-card">
-        <h3>Introduction to Cybersecurity</h3>
-        <p>Learn the basics of cybersecurity, online safety, and common cyber threats.</p>
-        <p><strong>Level:</strong> Beginner | <strong>Duration:</strong> 4 Weeks</p>
-        <button onclick="showForm('Introduction to Cybersecurity')">Enroll Now</button>
-      </div>
-     
+      <label for="emailInput">Enter your email address:</label>
+      <input type="email" id="emailInput" placeholder="e.g. yourname@example.com" autocomplete="off" />
 
-      <div class="course-card">
-        <h3>Cyber Threat Detection & Prevention</h3>
-        <p>Detect and prevent malware, phishing, and social engineering attacks.</p>
-        <p><strong>Level:</strong> Intermediate | <strong>Duration:</strong> 6 Weeks</p>
-        <button onclick="showForm('Cyber Threat Detection & Prevention')">Enroll Now</button>
+      <div class="buttons">
+        <button id="checkBtn">Check</button>
+        <button id="clearBtn">Clear</button>
       </div>
 
-      <div class="course-card">
-        <h3>Network & System Security</h3>
-        <p>Secure networks, firewalls, VPNs, and endpoint systems.</p>
-        <p><strong>Level:</strong> Advanced | <strong>Duration:</strong> 8 Weeks</p>
-        <button onclick="showForm('Network & System Security')">Enroll Now</button>
+      <div id="emailResult" class="result-box" role="alert">
+        <div class="result-main" id="resultMessage"></div>
+        <div class="ai-tip" id="aiTip"></div>
       </div>
+    </div>
+  </div>
 
-      <div class="course-card">
-        <h3>Ethical Hacking & Pen Testing</h3>
-        <p>Explore ethical hacking and penetration testing tools.</p>
-        <p><strong>Level:</strong> Advanced | <strong>Duration:</strong> 10 Weeks</p>
-        <button onclick="showForm('Ethical Hacking & Pen Testing')">
-      </div>
-      <style>
-        #enrollForm {
-          display: none;
-          margin-top: 20px;
-          max-width: 500px;
-          padding: 20px;
-          background-color: #f4f4f4;
-          border-radius: 10px;
-        }
-      
-        button {
-          padding: 10px 20px;
-          background-color: #007bff;
-          color: white;
-          border: none;
-          border-radius: 5px;
-          cursor: pointer;
-        }
-      
-        button:hover {
-          background-color: #0056b3;
-        }
-      </style>
-      
-      <!-- Enroll Button -->
-      <button onclick="toggleForm()">Enroll</button>
-      
-      <!-- Hidden Form -->
-      <div id="enrollForm">
-        <h2>Contact Us</h2>
-        <form action="https://formspree.io/f/mgvapwle" method="POST">
-          <label for="email">Your email:</label><br>
-          <input type="email" name="email" id="email" required style="width: 100%; padding: 10px; margin-bottom: 10px;"><br>
-      
-          <label for="message">Your message:</label><br>
-          <textarea name="message" id="message" rows="5" required style="width: 100%; padding: 10px; margin-bottom: 10px;"></textarea><br>
-      
-          <button type="submit">Send</button>
-        </form>
-      </div>
-      
-      <script>
-        function toggleForm() {
-          const form = document.getElementById("enrollForm");
-          form.style.display = (form.style.display === "none" || form.style.display === "") ? "block" : "none";
-        }
-      </script>
-    </section>
-
-    <section class="enroll-section" id="enrollForm" style="display:none;">
-      <h2>Enroll in <span id="selectedCourse"></span></h2>
-      <form>
-        <label>Full Name:</label>
-        <input type="text" placeholder="Enter your name" required><br>
-        <label>Email Address:</label>
-        <input type="email" placeholder="Enter your email" required><br>
-        <label>Student ID:</label>
-        <input type="text" placeholder="Enter your ID" required><br>
-        <button type="submit">Submit Enrollment</button>
-      </form>
-    </section>
-  </main>
-
-  <footer>
-    <p>&copy; Cyber Awareness at IAA Institution | Developed by OBEDY-47</p>
-  </footer>
-
+  <!-- 🔍 SCRIPT -->
   <script>
-    function showForm(courseName) {
-      document.getElementById('enrollForm').style.display = 'block';
-      document.getElementById('selectedCourse').textContent = courseName;
-      window.scrollTo(0, document.body.scrollHeight);
-    }
-  </script>
+    (function () {
+      const breachedEmails = [
+        "john@example.com",
+        "test123@gmail.com",
+        "user@breach.com",
+        "hacked@leak.net",
+        "admin@compromised.org",
+        "hello@phishingtrap.io"
+      ];
 
+      const riskyDomains = ["tempmail.com", "mailinator.com", "10minutemail.com", "yopmail.com"];
+
+      const tips = {
+        breached: [
+          "Change your password immediately and enable 2FA.",
+          "Use a password manager to generate strong, unique passwords.",
+          "Avoid reusing passwords across platforms to limit exposure.",
+          "Check if other accounts linked to this email are compromised.",
+          "Review recent account activity and secure your data."
+        ],
+        risky: [
+          "Avoid using temporary emails for important accounts.",
+          "Disposable emails offer no real account recovery options.",
+          "Use a reputable, long-term email service for security.",
+          "Temporary domains are often blocked or abused.",
+          "Secure accounts need reliable email addresses."
+        ],
+        safe: [
+          "Still, stay cautious and monitor your accounts regularly.",
+          "Enable 2FA even if no breach is found.",
+          "Use unique passwords for every account.",
+          "Subscribe to breach alert services like Have I Been Pwned.",
+          "Change passwords regularly for better safety."
+        ],
+        invalid: [
+          "Avoid using special characters or spaces in your email.",
+          "Check your format: example@domain.com is standard.",
+          "Make sure you didn't miss the '@' symbol.",
+          "Emails need a valid domain like gmail.com or yahoo.com.",
+          "Correct your email address before checking."
+        ]
+      };
+
+      function getRandomTip(category) {
+        const messages = tips[category];
+        return messages[Math.floor(Math.random() * messages.length)];
+      }
+
+      function checkEmail() {
+        const emailInput = document.getElementById("emailInput");
+        const email = emailInput.value.trim().toLowerCase();
+        const resultBox = document.getElementById("emailResult");
+        const resultMessage = document.getElementById("resultMessage");
+        const aiTip = document.getElementById("aiTip");
+
+        resultBox.style.display = "none";
+        resultBox.className = "result-box";
+        resultMessage.textContent = "";
+        aiTip.textContent = "";
+
+        const validFormat = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+        if (!validFormat.test(email)) {
+          displayResult("❌ Invalid email format. Please enter a valid email.", "breached", "invalid");
+          return;
+        }
+
+        const domain = email.split("@")[1];
+
+        if (breachedEmails.includes(email)) {
+          displayResult("⚠ Your email was found in a known data breach!", "breached", "breached");
+        } else if (riskyDomains.includes(domain)) {
+          displayResult("⚠ This email uses a risky disposable domain.", "breached", "risky");
+        } else {
+          displayResult("✅ Your email appears safe. No breach found.", "safe", "safe");
+        }
+      }
+
+      function displayResult(message, status, tipCategory) {
+        const resultBox = document.getElementById("emailResult");
+        const resultMessage = document.getElementById("resultMessage");
+        const aiTip = document.getElementById("aiTip");
+
+        resultMessage.textContent = message;
+        aiTip.textContent = "💡 AI Tip: " + getRandomTip(tipCategory);
+        resultBox.className = "result-box " + status;
+        resultBox.style.display = "flex";
+      }
+
+      function clearInput() {
+        const emailInput = document.getElementById("emailInput");
+        emailInput.value = "";
+        const resultBox = document.getElementById("emailResult");
+        resultBox.style.display = "none";
+        resultBox.className = "result-box";
+        document.getElementById("resultMessage").textContent = "";
+        document.getElementById("aiTip").textContent = "";
+        emailInput.focus();
+      }
+
+      document.getElementById("checkBtn").addEventListener("click", checkEmail);
+      document.getElementById("clearBtn").addEventListener("click", clearInput);
+      document.getElementById("emailInput").addEventListener("keypress", function (e) {
+        if (e.key === "Enter") checkEmail();
+      });
+    })();
+  </script>
 </body>
 </html>
